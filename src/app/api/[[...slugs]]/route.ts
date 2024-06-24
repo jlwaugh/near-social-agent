@@ -2,7 +2,7 @@ import { swagger } from "@elysiajs/swagger";
 import BN from "bn.js";
 import { Elysia } from "elysia";
 import { transactions, utils } from "near-api-js";
-import { latestBlockHash } from "./utils";
+import { fetchNonce, latestBlockHash } from "./utils";
 
 const app = new Elysia({ prefix: "/api", aot: false })
   .use(swagger())
@@ -11,6 +11,7 @@ const app = new Elysia({ prefix: "/api", aot: false })
     async ({ params: { dao, reciever, quantity }, headers }) => {
       const mbMetadata = JSON.parse(headers["mb-metadata"] || "{}");
       const accountId = mbMetadata?.accountData?.accountId || "near";
+      const publicKey = mbMetadata?.accountData?.devicePublicKey;
 
       const actions: transactions.Action[] = [];
       const args = {
@@ -37,10 +38,10 @@ const app = new Elysia({ prefix: "/api", aot: false })
       //need nonce
       //pass network from mbMetadata cause rpc node harcoded in latestblockhash
       const blockHash = await latestBlockHash();
-      //verify public key.
+      const nonce = await fetchNonce(accountId, publicKey);
       return transactions.createTransaction(
         accountId,
-        mbMetadata?.accountData?.publicKey,
+        publicKey,
         dao,
         nonce,
         actions,
