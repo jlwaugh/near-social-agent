@@ -1,5 +1,4 @@
 import { swagger } from "@elysiajs/swagger";
-import BN from "bn.js";
 import { Elysia } from "elysia";
 import { transactions, utils } from "near-api-js";
 import { fetchNonce, latestBlockHash } from "./utils";
@@ -30,8 +29,8 @@ const app = new Elysia({ prefix: "/api", aot: false })
         transactions.functionCall(
           "add_proposal",
           args,
-          new BN("200000000000000"), //200 Tgas ?
-          new BN("100000000000000000000000"), //0.1 deposit?
+          BigInt("200000000000000"), //new BN("200000000000000"), //200 Tgas ?
+          BigInt("100000000000000000000000"), //0.1 deposit?
         ),
       );
 

@@ -20,6 +20,9 @@ dependencies:
   elysia:
     specifier: ^1.0.16
     version: 1.0.16(@sinclair/typebox@0.32.29)(typescript@5.4.5)
+  near-api-js:
+    specifier: ^4.0.2
+    version: 4.0.2
   next:
     specifier: 14.2.3
     version: 14.2.3(react-dom@18.3.1)(react@18.3.1)
@@ -178,6 +181,24 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
+  /@near-js/accounts@1.2.1:
+    resolution: {integrity: sha512-j6+9n/p0vVLAahmN3YRFve+j0ammOALC9ZUfFhdE3kqtJESbSWMviC5qF/s2m0JQjpJGDtEv/dTADosIJoanWw==}
+    dependencies:
+      '@near-js/crypto': 1.2.4
+      '@near-js/providers': 0.2.2
+      '@near-js/signers': 0.1.4
+      '@near-js/transactions': 1.2.2
+      '@near-js/types': 0.2.1
+      '@near-js/utils': 0.2.2
+      borsh: 1.0.0
+      depd: 2.0.0
+      is-my-json-valid: 2.20.6
+      lru_map: 0.4.1
+      near-abi: 0.1.1
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
   /@near-js/crypto@1.2.4:
     resolution: {integrity: sha512-hcSj0ygvTcXlW9ftwEd9dbvQUWBCHNWNDLou9NLfmZERW9dr0gH8kUJPZUWfpJFlUPicb+jTiMpNwDTvP7VW4A==}
     dependencies:
@@ -186,6 +207,20 @@ packages:
       '@noble/curves': 1.2.0
       borsh: 1.0.0
       randombytes: 2.1.0
+    dev: false
+
+  /@near-js/keystores-browser@0.0.12:
+    resolution: {integrity: sha512-ptoVfJhMsktYcvY02wD2a8kDDH/E4d+kBfhwKF0H/Qt/w4JVJqEVgCLDBYUespuISTSqLSznNBjTSse+E7pJDQ==}
+    dependencies:
+      '@near-js/crypto': 1.2.4
+      '@near-js/keystores': 0.0.12
+    dev: false
+
+  /@near-js/keystores-node@0.0.12:
+    resolution: {integrity: sha512-LUz1HPXBYoZUaLyS/bEj4yZ4pqD9Hb7XURikh22VYL8mbLcR5VmWYwS7Tmi9aO1vW8M9bPnQs5SROAyA79qQgQ==}
+    dependencies:
+      '@near-js/crypto': 1.2.4
+      '@near-js/keystores': 0.0.12
     dev: false
 
   /@near-js/keystores@0.0.12:
@@ -239,6 +274,22 @@ packages:
       bs58: 4.0.0
       depd: 2.0.0
       mustache: 4.0.0
+    dev: false
+
+  /@near-js/wallet-account@1.2.2:
+    resolution: {integrity: sha512-LaWzqaz2tP1hcToDlmiQnFMGZ1W9dM9i4nFSILe5PLIFLBQmYXdLWc80skGDiTUeihVu6wwtQr6Z2CcG231rWw==}
+    dependencies:
+      '@near-js/accounts': 1.2.1
+      '@near-js/crypto': 1.2.4
+      '@near-js/keystores': 0.0.12
+      '@near-js/providers': 0.2.2
+      '@near-js/signers': 0.1.4
+      '@near-js/transactions': 1.2.2
+      '@near-js/types': 0.2.1
+      '@near-js/utils': 0.2.2
+      borsh: 1.0.0
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@near-wallet-selector/core@7.9.3(near-api-js@0.44.2):
@@ -442,6 +493,10 @@ packages:
     resolution: {integrity: sha512-V46N0zwKRF5Q00AZ6hWtN0T8gGmDUaUzLWQvHFo5yThtVwK/VCenFY3wXVbOvNfajEpsTfQM4IN9k/d6gUVX3A==}
     dependencies:
       '@types/node': 20.12.10
+    dev: false
+
+  /@types/json-schema@7.0.15:
+    resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
     dev: false
 
   /@types/json5@0.0.29:
@@ -1647,6 +1702,18 @@ packages:
     resolution: {integrity: sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==}
     dev: true
 
+  /generate-function@2.3.1:
+    resolution: {integrity: sha512-eeB5GfMNeevm/GRYq20ShmsaGcmI81kIX2K9XQx5miC8KdHaC6Jm0qQ8ZNeGOi7wYB8OsdxKs+Y2oVuTFuVwKQ==}
+    dependencies:
+      is-property: 1.0.2
+    dev: false
+
+  /generate-object-property@1.2.0:
+    resolution: {integrity: sha512-TuOwZWgJ2VAMEGJvAyPWvpqxSANF0LDpmyHauMjFYzaACvn+QTT/AZomvPCzVBV7yDN3OmwHQ5OvHaeLKre3JQ==}
+    dependencies:
+      is-property: 1.0.2
+    dev: false
+
   /get-intrinsic@1.2.4:
     resolution: {integrity: sha512-5uYhsJH8VJBTv7oslg4BznJYhDoRI6waYCxMmCdnTrcCrHA/fCFKoTFz2JKKE0HdDFUF7/oQuhzumXJK7paBRQ==}
     engines: {node: '>= 0.4'}
@@ -1960,6 +2027,20 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
+  /is-my-ip-valid@1.0.1:
+    resolution: {integrity: sha512-jxc8cBcOWbNK2i2aTkCZP6i7wkHF1bqKFrwEHuN5Jtg5BSaZHUZQ/JTOJwoV41YvHnOaRyWWh72T/KvfNz9DJg==}
+    dev: false
+
+  /is-my-json-valid@2.20.6:
+    resolution: {integrity: sha512-1JQwulVNjx8UqkPE/bqDaxtH4PXCe/2VRh/y3p99heOV87HG4Id5/VfDswd+YiAfHcRTfDlWgISycnHuhZq1aw==}
+    dependencies:
+      generate-function: 2.3.1
+      generate-object-property: 1.2.0
+      is-my-ip-valid: 1.0.1
+      jsonpointer: 5.0.1
+      xtend: 4.0.2
+    dev: false
+
   /is-negative-zero@2.0.3:
     resolution: {integrity: sha512-5KoIu2Ngpyek75jXodFvnafB6DJgr3u8uuK0LEZJjrU19DrMD3EVERaR8sjz8CCGgpZvxPl9SuE1GMVPFHx1mw==}
     engines: {node: '>= 0.4'}
@@ -1981,6 +2062,10 @@ packages:
     resolution: {integrity: sha512-Fd4gABb+ycGAmKou8eMftCupSir5lRxqf4aD/vd0cD2qc4HL07OjCeuHMr8Ro4CoMaeCKDB0/ECBOVWjTwUvPQ==}
     engines: {node: '>=8'}
     dev: true
+
+  /is-property@1.0.2:
+    resolution: {integrity: sha512-Ks/IoX00TtClbGQr4TWXemAnktAQvYB7HzcCxDGqEZU6oCmb2INHuOoKxbtR+HFkmYWBKv/dOZtGRiAjDhj92g==}
+    dev: false
 
   /is-regex@1.1.4:
     resolution: {integrity: sha512-kvRdxDsxZjhzUX07ZnLydzS1TU/TJlTUHHY4YLL87e37oUA49DfkLqgy+VjFocowy29cKvcSiu+kIv728jTTVg==}
@@ -2111,6 +2196,11 @@ packages:
       minimist: 1.2.8
     dev: true
 
+  /jsonpointer@5.0.1:
+    resolution: {integrity: sha512-p/nXbhSEcu3pZRdkW1OfJhpsVtW1gd4Wa1fnQc9YLiTfAjn0312eMKimbdIQzuZl9aa9xUGaRlP9T/CJE/ditQ==}
+    engines: {node: '>=0.10.0'}
+    dev: false
+
   /jsx-ast-utils@3.3.5:
     resolution: {integrity: sha512-ZZow9HBI5O6EPgSJLUb8n2NKgmVWTwCvHGwFuJlMjvLFqlGG6pjirPhtdsseaLZjSibD8eegzmYpUZwoIlj2cQ==}
     engines: {node: '>=4.0'}
@@ -2193,6 +2283,10 @@ packages:
     resolution: {integrity: sha512-9hp3Vp2/hFQUiIwKo8XCeFVnrg8Pk3TYNPIR7tJADKi5YfcF7vEaK7avFHTlSy3kOKYaJQaalfEo6YuXdceBOQ==}
     engines: {node: 14 || >=16.14}
     dev: true
+
+  /lru_map@0.4.1:
+    resolution: {integrity: sha512-I+lBvqMMFfqaV8CJCISjI3wbjmwVu/VyOoU7+qtu9d7ioW5klMgsTTiUOUp+DJvfTTzKXoPbyC6YfgkNcyPSOg==}
+    dev: false
 
   /mathjs@9.5.2:
     resolution: {integrity: sha512-c0erTq0GP503/Ch2OtDOAn50GIOsuxTMjmE00NI/vKJFSWrDaQHRjx6ai+16xYv70yBSnnpUgHZGNf9FR9IwmA==}
@@ -2288,6 +2382,12 @@ packages:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
 
+  /near-abi@0.1.1:
+    resolution: {integrity: sha512-RVDI8O+KVxRpC3KycJ1bpfVj9Zv+xvq9PlW1yIFl46GhrnLw83/72HqHGjGDjQ8DtltkcpSjY9X3YIGZ+1QyzQ==}
+    dependencies:
+      '@types/json-schema': 7.0.15
+    dev: false
+
   /near-api-js@0.44.2:
     resolution: {integrity: sha512-eMnc4V+geggapEUa3nU2p8HSHn/njtloI4P2mceHQWO8vDE1NGpnAw8FuTBrLmXSgIv9m6oocgFc9t3VNf5zwg==}
     dependencies:
@@ -2302,6 +2402,30 @@ packages:
       node-fetch: 2.7.0
       text-encoding-utf-8: 1.0.2
       tweetnacl: 1.0.3
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
+  /near-api-js@4.0.2:
+    resolution: {integrity: sha512-E39xsjWykxOAY6bqVl4q8+TYCfJHKzXEQD8ek82gf58IX8P1STKOS/x0c4yBO9wmSMdv7ZSymmENAozetgdzNQ==}
+    dependencies:
+      '@near-js/accounts': 1.2.1
+      '@near-js/crypto': 1.2.4
+      '@near-js/keystores': 0.0.12
+      '@near-js/keystores-browser': 0.0.12
+      '@near-js/keystores-node': 0.0.12
+      '@near-js/providers': 0.2.2
+      '@near-js/signers': 0.1.4
+      '@near-js/transactions': 1.2.2
+      '@near-js/types': 0.2.1
+      '@near-js/utils': 0.2.2
+      '@near-js/wallet-account': 1.2.2
+      '@noble/curves': 1.2.0
+      borsh: 1.0.0
+      depd: 2.0.0
+      http-errors: 1.7.2
+      near-abi: 0.1.1
+      node-fetch: 2.6.7
     transitivePeerDependencies:
       - encoding
     dev: false
@@ -2360,7 +2484,6 @@ packages:
     dependencies:
       whatwg-url: 5.0.0
     dev: false
-    optional: true
 
   /node-fetch@2.7.0:
     resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
@@ -3324,6 +3447,11 @@ packages:
   /wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
     dev: true
+
+  /xtend@4.0.2:
+    resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
+    engines: {node: '>=0.4'}
+    dev: false
 
   /yaml@2.4.2:
     resolution: {integrity: sha512-B3VqDZ+JAg1nZpaEmWtTXUlBneoGx6CPM9b0TENK6aoSu5t73dItudwdgmi6tHlIZZId4dZ9skcAQ2UbcyAeVA==}
