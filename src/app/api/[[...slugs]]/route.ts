@@ -10,7 +10,7 @@ const app = new Elysia({ prefix: "/api", aot: false })
     async ({ params: { dao, reciever, quantity }, headers }) => {
       const mbMetadata = JSON.parse(headers["mb-metadata"] || "{}");
       const accountId = mbMetadata?.accountData?.accountId || "near";
-      const publicKey = mbMetadata?.accountData?.devicePublicKey;
+      const publicKey = mbMetadata?.accountData?.devicePublicKey || "";
 
       const actions: transactions.Action[] = [];
       const args = {
@@ -38,7 +38,7 @@ const app = new Elysia({ prefix: "/api", aot: false })
       //pass network from mbMetadata cause rpc node harcoded in latestblockhash
       const blockHash = await latestBlockHash();
       const nonce = await fetchNonce(accountId, publicKey);
-      return transactions.createTransaction(
+      const transaction = transactions.createTransaction(
         accountId,
         publicKey,
         dao,
@@ -46,6 +46,16 @@ const app = new Elysia({ prefix: "/api", aot: false })
         actions,
         utils.serialize.base_decode(blockHash),
       );
+      console.log(transaction);
+      return transaction;
+      // return transactions.createTransaction(
+      //   accountId,
+      //   publicKey,
+      //   dao,
+      //   nonce,
+      //   actions,
+      //   utils.serialize.base_decode(blockHash),
+      // );
     },
   )
   .compile();
