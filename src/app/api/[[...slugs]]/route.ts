@@ -1,7 +1,7 @@
 import { swagger } from "@elysiajs/swagger";
 import { Elysia } from "elysia";
 import { transactions, utils } from "near-api-js";
-import { fetchNonce, latestBlockHash } from "./utils";
+import { fetchNonce, JSONStringifyWithBigInt, latestBlockHash } from "./utils";
 
 const app = new Elysia({ prefix: "/api", aot: false })
   .use(swagger())
@@ -47,7 +47,7 @@ const app = new Elysia({ prefix: "/api", aot: false })
         utils.serialize.base_decode(blockHash),
       );
       console.log(transaction);
-      return transaction;
+      return JSONStringifyWithBigInt(transaction);
       // return transactions.createTransaction(
       //   accountId,
       //   publicKey,

@@ -23,3 +23,13 @@ export async function fetchNonce(
 
   return rawAccessKey.nonce;
 }
+
+export function JSONStringifyWithBigInt(obj: any): string {
+  return JSON.stringify(obj, (key, value) => {
+    if (typeof value === "bigint") {
+      return value.toString();
+    }
+    return value;
+  });
+}
+
