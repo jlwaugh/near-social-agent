@@ -1,13 +1,13 @@
 import { swagger } from "@elysiajs/swagger";
 import { Elysia } from "elysia";
 import { transactions, utils } from "near-api-js";
-import { fetchNonce, JSONStringifyWithBigInt, latestBlockHash } from "./utils";
+import { fetchNonce, latestBlockHash } from "./utils";
 
 const app = new Elysia({ prefix: "/api", aot: false })
   .use(swagger())
   .get(
-    "/transfer/:dao/:reciever/:quantity",
-    async ({ params: { dao, reciever, quantity }, headers }) => {
+    "/transfer/:dao/:receiver/:quantity",
+    async ({ params: { dao, receiver, quantity }, headers }) => {
       const mbMetadata = JSON.parse(headers["mb-metadata"] || "{}");
       const accountId = mbMetadata?.accountData?.accountId || "near";
       const publicKey = mbMetadata?.accountData?.devicePublicKey || "";
@@ -15,11 +15,11 @@ const app = new Elysia({ prefix: "/api", aot: false })
       const actions: transactions.Action[] = [];
       const args = {
         proposal: {
-          description: "Transfer NEAR to " + reciever + ".",
+          description: "Transfer NEAR to " + receiver + ".",
           kind: {
             Transfer: {
               token_id: "",
-              receiver_id: reciever,
+              receiver_id: receiver,
               amount: quantity,
             },
           },
@@ -47,7 +47,7 @@ const app = new Elysia({ prefix: "/api", aot: false })
         utils.serialize.base_decode(blockHash),
       );
       console.log(transaction);
-      return JSONStringifyWithBigInt(transaction);
+      return transaction;
       // return transactions.createTransaction(
       //   accountId,
       //   publicKey,
