@@ -67,7 +67,7 @@ const json = {
         },
       },
     },
-    "/api/transfer/{dao}/{receiver}/{quantity}": {
+    "/api/transfer/near/{dao}/{receiver}/{quantity}": {
       get: {
         description:
           "Generate transaction data for creating a proposal to transfer NEAR in a DAO.",
@@ -228,7 +228,6 @@ const json = {
           {
             in: "query",
             name: "count",
-
             required: false,
             schema: {
               type: "number",
@@ -490,6 +489,223 @@ const json = {
                     "actions",
                     "blockHash",
                   ],
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    "/api/daos": {
+      get: {
+        description: "Fetches a list of all DAOs.",
+        operationId: "fetchAllDaos",
+        responses: {
+          "200": {
+            description: "A list of DAOs.",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    daos: {
+                      type: "array",
+                      items: {
+                        type: "object",
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    "/api/dao/{keyword}": {
+      get: {
+        description: "Fetches a list of DAOs that match a given keyword.",
+        operationId: "fetchDaosByKeyword",
+        parameters: [
+          {
+            in: "path",
+            name: "keyword",
+            required: true,
+            schema: {
+              type: "string",
+            },
+            description: "The keyword to filter DAOs by.",
+          },
+        ],
+        responses: {
+          "200": {
+            description: "A list of DAOs matching the keyword.",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    daos: {
+                      type: "array",
+                      items: {
+                        type: "object",
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          "404": {
+            description: "No DAOs found for the specified keyword.",
+          },
+          "500": {
+            description: "An error occurred while fetching DAOs.",
+          },
+        },
+      },
+    },
+    "/api/proposals/user": {
+      get: {
+        description:
+          "Fetches proposals of all DAOs created by a specific user using their account ID.",
+        operationId: "fetchProposalsByUser",
+        parameters: [
+          {
+            in: "query",
+            name: "account",
+            required: false,
+            schema: {
+              type: "string",
+              default: "near",
+            },
+            description:
+              "The account ID of the user who created the proposals.",
+          },
+        ],
+        responses: {
+          "200": {
+            description: "A list of proposals created by the user.",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    proposals: {
+                      type: "array",
+                      items: {
+                        type: "object",
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    "/api/transfer/usdt/{dao}/{receiver}/{quantity}": {
+      get: {
+        description:
+          "Creates a transfer proposal to send USDT from a DAO to a specified receiver.",
+        operationId: "createUsdtTransferProposal",
+        parameters: [
+          {
+            in: "path",
+            name: "dao",
+            required: true,
+            schema: {
+              type: "string",
+            },
+            description: "The ID of the DAO initiating the USDT transfer.",
+          },
+          {
+            in: "path",
+            name: "receiver",
+            required: true,
+            schema: {
+              type: "string",
+            },
+            description: "The account ID of the receiver.",
+          },
+          {
+            in: "path",
+            name: "quantity",
+            required: true,
+            schema: {
+              type: "string",
+            },
+            description: "The quantity of USDT to be transferred.",
+          },
+        ],
+        responses: {
+          "200": {
+            description:
+              "The transaction details for the USDT transfer proposal.",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    transaction: {
+                      type: "object",
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    "/api/transfer/usdc/{dao}/{receiver}/{quantity}": {
+      get: {
+        description:
+          "Creates a transfer proposal to send USDC from a DAO to a specified receiver.",
+        operationId: "createUsdcTransferProposal",
+        parameters: [
+          {
+            in: "path",
+            name: "dao",
+            required: true,
+            schema: {
+              type: "string",
+            },
+            description: "The ID of the DAO initiating the USDC transfer.",
+          },
+          {
+            in: "path",
+            name: "receiver",
+            required: true,
+            schema: {
+              type: "string",
+            },
+            description: "The account ID of the receiver.",
+          },
+          {
+            in: "path",
+            name: "quantity",
+            required: true,
+            schema: {
+              type: "string",
+            },
+            description: "The quantity of USDC to be transferred.",
+          },
+        ],
+        responses: {
+          "200": {
+            description:
+              "The transaction details for the USDC transfer proposal.",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    transaction: {
+                      type: "object",
+                    },
+                  },
                 },
               },
             },
