@@ -84,8 +84,9 @@ export async function createTransferProposal(
   const daoPolicy = await fetchNearView(dao, "get_policy", "e30=");
   const actions: transactions.Action[] = [];
   let decimals = 24;
-  if (tokenId === "") {
-    decimals = (await fetchFTMetadata(accountId))?.decimals;
+  if (tokenId !== "") {
+    const metadata = await fetchFTMetadata(tokenId);
+    decimals = metadata?.decimals;
   }
   const amount = Big(quantity).mul(Big(10).pow(decimals)).toFixed();
   const args = {
@@ -108,7 +109,6 @@ export async function createTransferProposal(
       BigInt(daoPolicy?.proposal_bond || "100000000000000000000000"), //0.1 deposit?
     ),
   );
-
   const blockHash = await latestBlockHash();
   const nonce = await fetchNonce(accountId, publicKey);
   const transaction = transactions.createTransaction(

@@ -496,7 +496,7 @@ const json = {
         },
       },
     },
-    "/api/daos": {
+    "/api/alldaos": {
       get: {
         description: "Fetches a list of all DAOs.",
         operationId: "fetchAllDaos",
@@ -522,7 +522,7 @@ const json = {
         },
       },
     },
-    "/api/dao/{keyword}": {
+    "/api/dao/match/{keyword}": {
       get: {
         description: "Fetches a list of DAOs that match a given keyword.",
         operationId: "fetchDaosByKeyword",
@@ -561,6 +561,46 @@ const json = {
           },
           "500": {
             description: "An error occurred while fetching DAOs.",
+          },
+        },
+      },
+    },
+    "/api/dao/{daoId}": {
+      get: {
+        description: "Fetches details about the dao given by it's Id.",
+        operationId: "fetchDaosById",
+        parameters: [
+          {
+            in: "path",
+            name: "daoId",
+            required: true,
+            schema: {
+              type: "string",
+            },
+            description: "The sputnik dao id.",
+          },
+        ],
+        responses: {
+          "200": {
+            description: "Details about the DAO.",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    dao: {
+                      type: "object",
+                    },
+                  },
+                },
+              },
+            },
+          },
+          "404": {
+            description: "No DAO found for the specified id.",
+          },
+          "500": {
+            description: "An error occurred while fetching DAO.",
           },
         },
       },
@@ -641,17 +681,101 @@ const json = {
         ],
         responses: {
           "200": {
-            description:
-              "The transaction details for the USDT transfer proposal.",
+            description: "Transaction data generated successfully.",
             content: {
               "application/json": {
                 schema: {
                   type: "object",
                   properties: {
-                    transaction: {
+                    signerId: {
+                      type: "string",
+                      description:
+                        "The account ID that should sign this transaction.",
+                    },
+                    publicKey: {
+                      type: "string",
+                      description:
+                        "The public key associated with the signer account.",
+                    },
+                    nonce: {
+                      type: "string",
+                      description:
+                        "A unique number to ensure the uniqueness of the transaction.",
+                    },
+                    receiverId: {
+                      type: "string",
+                      description:
+                        "The account ID of the DAO contract that will receive this transaction.",
+                    },
+                    actions: {
+                      type: "array",
+                      description:
+                        "The list of actions to be performed in this transaction.",
+                      items: {
+                        type: "object",
+                        properties: {
+                          functionCall: {
+                            type: "object",
+                            properties: {
+                              methodName: {
+                                type: "string",
+                                description:
+                                  "The name of the contract method to be called.",
+                              },
+                              args: {
+                                type: "object",
+                                properties: {
+                                  type: {
+                                    type: "string",
+                                    description:
+                                      "The type of the arguments data.",
+                                  },
+                                  data: {
+                                    type: "array",
+                                    items: {
+                                      type: "integer",
+                                    },
+                                    description:
+                                      "The encoded arguments for the function call.",
+                                  },
+                                },
+                              },
+                              gas: {
+                                type: "string",
+                                description:
+                                  "The amount of gas attached to this function call.",
+                              },
+                              deposit: {
+                                type: "string",
+                                description:
+                                  "The amount of NEAR tokens attached to this function call.",
+                              },
+                            },
+                          },
+                          enum: {
+                            type: "string",
+                            description: "The type of action being performed.",
+                          },
+                        },
+                      },
+                    },
+                    blockHash: {
                       type: "object",
+                      additionalProperties: {
+                        type: "integer",
+                      },
+                      description:
+                        "The hash of the block used as a reference for this transaction.",
                     },
                   },
+                  required: [
+                    "signerId",
+                    "publicKey",
+                    "nonce",
+                    "receiverId",
+                    "actions",
+                    "blockHash",
+                  ],
                 },
               },
             },
@@ -695,17 +819,101 @@ const json = {
         ],
         responses: {
           "200": {
-            description:
-              "The transaction details for the USDC transfer proposal.",
+            description: "Transaction data generated successfully.",
             content: {
               "application/json": {
                 schema: {
                   type: "object",
                   properties: {
-                    transaction: {
+                    signerId: {
+                      type: "string",
+                      description:
+                        "The account ID that should sign this transaction.",
+                    },
+                    publicKey: {
+                      type: "string",
+                      description:
+                        "The public key associated with the signer account.",
+                    },
+                    nonce: {
+                      type: "string",
+                      description:
+                        "A unique number to ensure the uniqueness of the transaction.",
+                    },
+                    receiverId: {
+                      type: "string",
+                      description:
+                        "The account ID of the DAO contract that will receive this transaction.",
+                    },
+                    actions: {
+                      type: "array",
+                      description:
+                        "The list of actions to be performed in this transaction.",
+                      items: {
+                        type: "object",
+                        properties: {
+                          functionCall: {
+                            type: "object",
+                            properties: {
+                              methodName: {
+                                type: "string",
+                                description:
+                                  "The name of the contract method to be called.",
+                              },
+                              args: {
+                                type: "object",
+                                properties: {
+                                  type: {
+                                    type: "string",
+                                    description:
+                                      "The type of the arguments data.",
+                                  },
+                                  data: {
+                                    type: "array",
+                                    items: {
+                                      type: "integer",
+                                    },
+                                    description:
+                                      "The encoded arguments for the function call.",
+                                  },
+                                },
+                              },
+                              gas: {
+                                type: "string",
+                                description:
+                                  "The amount of gas attached to this function call.",
+                              },
+                              deposit: {
+                                type: "string",
+                                description:
+                                  "The amount of NEAR tokens attached to this function call.",
+                              },
+                            },
+                          },
+                          enum: {
+                            type: "string",
+                            description: "The type of action being performed.",
+                          },
+                        },
+                      },
+                    },
+                    blockHash: {
                       type: "object",
+                      additionalProperties: {
+                        type: "integer",
+                      },
+                      description:
+                        "The hash of the block used as a reference for this transaction.",
                     },
                   },
+                  required: [
+                    "signerId",
+                    "publicKey",
+                    "nonce",
+                    "receiverId",
+                    "actions",
+                    "blockHash",
+                  ],
                 },
               },
             },

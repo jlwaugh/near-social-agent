@@ -14,7 +14,7 @@ const app = new Elysia({ prefix: "/api", aot: false })
   .use(swagger())
   // Create a Near Transfer proposal
   .get(
-    "/transfer/near",
+    "/transfer/near/:dao/:receiver/:quantity",
     async ({ params: { dao, receiver, quantity }, headers }) => {
       const mbMetadata = JSON.parse(headers["mb-metadata"] || "{}");
       const accountId = mbMetadata?.accountData?.accountId || "near";
@@ -139,21 +139,26 @@ const app = new Elysia({ prefix: "/api", aot: false })
     },
   )
   // fetch all daos
-  .get("/daos", async () => {
+  .get("/alldaos", async () => {
     const daos = (await pikespeakQuery(`daos/all`)).map(({ contract_id }) => ({
       contract_id,
     })); // Exclude total_in_dollar
     return { daos };
   })
   // Fetch a single DAO using specific keywords.
-  .get("/dao/:keyword", async ({ params: { keyword } }) => {
+  .get("/dao/match/:keyword", async ({ params: { keyword } }) => {
     const daos = await pikespeakQuery(`daos/all`);
     // Filter the daos based on the keyword matching part or the full contract_id
     const filteredDaos = daos
-      .filter((dao) => dao.contract_id.includes(keyword))
-      .map(({ contract_id }) => ({ contract_id })); // Exclude total_in_dollar
+      .filter((dao) => new RegExp(keyword, "i").test(dao.contract_id))
+      .map(({ contract_id }) => ({ contract_id }));
 
     return { filteredDaos };
+  })
+  // Details of a particular DAO
+  .get("/dao/:daoId", async ({ params: { daoId } }) => {
+    const dao = await fetchNearView(daoId, "get_policy", "e30=");
+    return { dao };
   })
   // List proposals only created by the user
   .get("/proposals/user", async ({ query, headers }) => {
