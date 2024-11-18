@@ -7,6 +7,15 @@ const nextConfig = {
     return config;
   },
 
+  async rewrites() {
+    return [
+      {
+        source: '/.well-known/ai-plugin.json',
+        destination: '/api/ai-plugin',
+      },
+    ];
+  },
+
   async headers() {
     return [
       {
