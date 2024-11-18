@@ -1,28 +1,36 @@
 import { NextResponse } from "next/server";
-import bitteDevJson from "@/bitte.dev.json";
 import { DEPLOYMENT_URL } from "vercel-url";
+
+const accountId = JSON.parse(process.env.BITTE_KEY || "{}").accountId;
+const tunnelUrl = JSON.parse(process.env.BITTE_CONFIG || "{}").url;
+
+const pluginUrl = tunnelUrl || DEPLOYMENT_URL;
+
+if (!accountId) {
+	console.warn("No accountId found in environment variables");
+}
 
 const json = {
   openapi: "3.0.0",
   info: {
-    title: "DAO Proposal API",
+    title: "The NEAR DAO Agent",
     description:
-      "API for interacting with Sputnik DAO Contracts and putting proposals for simple NEAR transfer.",
+      "An agent to interact with Sputnik DAO Contracts. Query DAOs, create proposals, and vote on proposals.",
     version: "1.0.0",
   },
   servers: [
     {
-      url: bitteDevJson.url || DEPLOYMENT_URL,
+      url: pluginUrl,
     },
   ],
   "x-mb": {
-    "account-id": "jaswinder.near",
+    "account-id": accountId,
     assistant: {
       name: "DAO Agent",
       description:
-        "An API to generate transaction data for creating NEAR transfer proposals in Sputnik DAOs.",
+        "An agent to interact with Sputnik DAO Contracts. Query DAOs, create proposals, and vote on proposals.",
       instructions:
-        "Help the user create transfer proposals for Sputnik DAOs. To generate the transaction data, you need to provide the following information: the DAO's address, the recipient's NEAR account address, and the amount of NEAR to be transferred. The API will return transaction data which should be used with the 'generate-transaction' tool to submit the proposal.  Any proposals created should be calling the 'add_proposal' method on the DAO contract. When you fetch DAOs for a given account, display the DAOs in a nice table.",
+        "Help the user create transfer proposals for Sputnik DAOs. To generate the transaction data, you need to provide the following information: the DAO's address, the recipient's NEAR account address, and the amount of NEAR to be transferred. The API will return transaction data which should be used with the 'generate-transaction' tool to submit the proposal.  Any proposals created should be calling the 'add_proposal' method on the DAO contract. Display JSON data in Table format always.",
       tools: [{ type: "generate-transaction" }],
     },
   },

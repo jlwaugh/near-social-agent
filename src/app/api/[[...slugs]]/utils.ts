@@ -101,23 +101,21 @@ export async function createTransferProposal(
       },
     },
   };
-  actions.push(
-    transactions.functionCall(
-      "add_proposal",
-      args,
-      BigInt("200000000000000"), //new BN("200000000000000"), //200 Tgas ?
-      BigInt(daoPolicy?.proposal_bond || "100000000000000000000000"), //0.1 deposit?
-    ),
-  );
-  const blockHash = await latestBlockHash();
-  const nonce = await fetchNonce(accountId, publicKey);
-  const transaction = transactions.createTransaction(
-    accountId,
-    publicKey,
-    dao,
-    nonce,
-    actions,
-    utils.serialize.base_decode(blockHash),
-  );
-  return transaction;
+
+  // Get deposit from policy
+  const deposit = daoPolicy?.proposal_bond || "100000000000000000000000"; // 0.1 NEAR default
+
+  // Return the function call data in AI-friendly format
+  return `
+[
+    {
+      "methodName": "add_proposal",
+      "args": ${JSON.stringify(args)},
+      "gas": "200000000000000",
+      "deposit": "${deposit}",
+      "contractName": "${dao}"
+    }
+]
+Use this data to call \`generate-transaction\` tool to generate a transaction.
+  `;
 }

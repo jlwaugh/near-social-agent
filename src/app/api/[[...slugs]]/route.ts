@@ -46,7 +46,8 @@ const app = new Elysia({ prefix: "/api", aot: false })
       daos: [dao],
       limit: count,
     });
-    return { proposals: proposals };
+    //return { proposals: proposals };
+    return `Display ${proposals} as a table and show each column as a separate field. Amount does not always have YoctoNear unit. Display the token-id column too for Transfer Types.`;
   })
   // List proposals the user is eligible to vote on
   .get(
@@ -108,41 +109,30 @@ const app = new Elysia({ prefix: "/api", aot: false })
   .get(
     "/vote/:dao/:proposalId/:action",
     async ({ params: { dao, proposalId, action }, headers }) => {
-      const mbMetadata = JSON.parse(headers["mb-metadata"] || "{}");
-      const accountId = mbMetadata?.accountData?.accountId || "near";
-      const publicKey = mbMetadata?.accountData?.devicePublicKey || "";
-      const actions: transactions.Action[] = [];
-      actions.push(
-        transactions.functionCall(
-          "act_proposal",
-          {
-            id: proposalId,
-            action: action,
-          },
-          BigInt("300000000000000"),
-          BigInt("0"),
-        ),
-      );
+      const args = {
+        id: proposalId,
+        action: action
+      };
 
-      const blockHash = await latestBlockHash();
-      const nonce = await fetchNonce(accountId, publicKey);
-      const transaction = transactions.createTransaction(
-        accountId,
-        publicKey,
-        dao,
-        nonce,
-        actions,
-        utils.serialize.base_decode(blockHash),
-      );
-
-      return transaction;
+  return `
+  [
+      {
+        "methodName": "act_proposal",
+        "args": ${JSON.stringify(args)},
+        "gas": "300000000000000",
+        "deposit": "0",
+        "contractName": "${dao}"
+      }
+  ]
+  Use this data to call \`generate-transaction\` tool to generate a transaction.
+    `;
     },
   )
   // fetch all daos
   .get("/alldaos", async () => {
     const daos = (await pikespeakQuery(`daos/all`)).map(({ contract_id }) => ({
       contract_id,
-    })); // Exclude total_in_dollar
+    }));
     return { daos };
   })
   // Fetch a single DAO using specific keywords.
