@@ -114,7 +114,7 @@ const app = new Elysia({ prefix: "/api", aot: false })
     "/vote/:dao/:proposalId/:action",
     async ({ params: { dao, proposalId, action }, headers }) => {
       const args = {
-        id: proposalId,
+        id: parseInt(proposalId),
         action: action
       };
 
