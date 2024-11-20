@@ -46,8 +46,12 @@ const app = new Elysia({ prefix: "/api", aot: false })
       daos: [dao],
       limit: count,
     });
-    //return { proposals: proposals };
-    return `Display ${proposals} as a table and show each column as a separate field. Amount does not always have YoctoNear unit. Display the token-id column too for Transfer Types.`;
+    return { 
+      data: {
+        proposals: proposals 
+      },
+      instruction: "Display the proposals as a table and show each column as a separate field. Amount does not always have YoctoNear unit. Display the token-id column too for Transfer Types."
+    };
   })
   // List proposals the user is eligible to vote on
   .get(
