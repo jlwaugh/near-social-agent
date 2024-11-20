@@ -31,7 +31,7 @@ const app = new Elysia({ prefix: "/api", aot: false })
     },
   )
   // List of all DAOs a user is part of.
-  .get("/daos/:account?", async ({ params: { account }, headers }) => {
+  .get("/daos/:account", async ({ params: { account }, headers }) => {
     const mbMetadata = JSON.parse(headers["mb-metadata"] || "{}");
     const accountId = account || mbMetadata?.accountData?.accountId || "near";
     const allDaos = await pikespeakQuery("daos/members");
@@ -51,7 +51,7 @@ const app = new Elysia({ prefix: "/api", aot: false })
   })
   // List proposals the user is eligible to vote on
   .get(
-    "/proposals/vote/:account?",
+    "/proposals/vote/:account",
     async ({ params: { account }, headers }) => {
       const mbMetadata = JSON.parse(headers["mb-metadata"] || "{}");
       const accountId = account || mbMetadata?.accountData?.accountId || "near";

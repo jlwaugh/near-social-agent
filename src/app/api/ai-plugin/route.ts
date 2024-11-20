@@ -15,7 +15,7 @@ const json = {
   info: {
     title: "The NEAR DAO Agent",
     description:
-      "An agent to interact with Sputnik DAO Contracts. Query DAOs, create proposals, and vote on proposals.",
+      "An agent to interact with Sputnik DAO Contracts. Query DAOs, create proposals, and vote on proposals. Works for Near and stables like USDC/USDT on Near.",
     version: "1.0.0",
   },
   servers: [
