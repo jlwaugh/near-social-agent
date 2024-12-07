@@ -4,11 +4,11 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main className="flex flex-col p-2">
-      <h1 className="text-3xl font-bold">Sputnik DAO Agent</h1>
+      <h1 className="text-3xl font-bold">Near Social Agent</h1>
       <ul>
         <li>
           <a
-            href="https://docs.mintbase.xyz/ai/mintbase-plugins"
+            href="https://docs.bitte.ai/agents/introduction"
             target="_blank"
             rel="noreferrer"
           >
@@ -25,7 +25,7 @@ export default function Home() {
         </li>
         <li>
           <a
-            href="https://github.com/jaswinder6991/dao-agent-next"
+            href="https://github.com/jlwaugh/near-social-agent"
             target="_blank"
             rel="noreferrer"
           >

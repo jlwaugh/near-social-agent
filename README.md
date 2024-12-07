@@ -1,4 +1,4 @@
-# Sputnik DAO Mintbase Wallet Plugin
+# Near Social Agent
 
 ## Getting Started
 
