@@ -59,7 +59,7 @@ const json = {
                 schema: {
                   type: "object",
                   properties: {
-                    daos: {
+                    data: {
                       type: "array",
                       description:
                         "The data saved in the SocialDB contract by a given account.",
